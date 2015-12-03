@@ -1,0 +1,31 @@
+<h1>{{title}}</h1>
+<p id='ppl'>{{active}}</p>
+
+<ul id="messages"></ul>
+<input id="message-input" type=text autocomplete="off">
+<input id='btn' type="button" value="Submit">
+
+<script>
+	var socket = io();
+	var button = document.querySelector('input[type=button]');
+	console.log(button);
+	button.addEventListener('click', sendMessage);
+
+	function sendMessage(evt) {
+		console.log('sending message', evt);
+		socket.emit('chat message', document.querySelector('#message-input').value);
+		document.querySelector('#message-input').value = '';
+	}
+
+	socket.on('chat message', onMessage);
+	function onMessage(msg) {
+		document.querySelector('#messages').appendChild(document.createElement('p')).textContent = msg;
+	}
+
+	socket.on('online now', online);
+	function online(ppl) {
+		document.querySelector('#ppl').textContent = ppl + ' online now';
+	}
+	
+</script>
+		
