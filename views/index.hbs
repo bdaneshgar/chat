@@ -10,12 +10,17 @@
 	var button = document.querySelector('input[type=button]');
 	console.log(button);
 	button.addEventListener('click', sendMessage);
-	var form = document.getElementsByClassName('form');
-	form[0].addEventListener('submit', sendMessage);
+
+
+	$("#message-input").keyup(function(event){
+	    if(event.keyCode == 13){
+	        $("#btn").click();
+	    }
+	});
 
 	function sendMessage(evt) {
-		console.log('sending message', evt);
-		if(document.querySelector('#message-input').value == ''){
+		if(document.querySelector('#message-input').value != ''){
+			console.log('sending message', evt);
 			socket.emit('chat message', document.querySelector('#message-input').value);
 			document.querySelector('#message-input').value = '';
 		}
