@@ -2,6 +2,7 @@
 <p id='ppl'>{{active}}</p>
 
 <ul id="messages"></ul>
+
 <div id='field'>
 	<input id="message-input" type=text autocomplete="off">
 	<input id='btn' type="button" value="Send">
@@ -31,6 +32,7 @@
 	socket.on('chat message', onMessage);
 	function onMessage(msg) {
 		document.querySelector('#messages').appendChild(document.createElement('p')).textContent = msg;
+		window.scrollTo(0,document.body.scrollHeight);
 	}
 
 	socket.on('online now', online);
