@@ -10,11 +10,15 @@
 	var button = document.querySelector('input[type=button]');
 	console.log(button);
 	button.addEventListener('click', sendMessage);
+	var form = document.getElementsByClassName('form');
+	form[0].addEventListener('submit', sendMessage);
 
 	function sendMessage(evt) {
 		console.log('sending message', evt);
-		socket.emit('chat message', document.querySelector('#message-input').value);
-		document.querySelector('#message-input').value = '';
+		if(document.querySelector('#message-input').value == ''){
+			socket.emit('chat message', document.querySelector('#message-input').value);
+			document.querySelector('#message-input').value = '';
+		}
 	}
 
 	socket.on('chat message', onMessage);
