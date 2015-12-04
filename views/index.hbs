@@ -2,8 +2,10 @@
 <p id='ppl'>{{active}}</p>
 
 <ul id="messages"></ul>
-<input id="message-input" type=text autocomplete="off">
-<input id='btn' type="button" value="Submit">
+<div id='field'>
+	<input id="message-input" type=text autocomplete="off">
+	<input id='btn' type="button" value="Send">
+</div>
 
 <script>
 	var socket = io();
