@@ -21,6 +21,11 @@
 	console.log(button);
 	button.addEventListener('click', sendMessage);
 
+	document.addEventListener('focus',function(e){
+		titlenotifier.reset();
+	}, true);
+
+
 	var $chat = $('.chat'),
 		$printer = $('#messages', $chat),
 		printerH  = $printer.innerHeight();
@@ -29,8 +34,6 @@
 	function scrollBottom(){
 		$printer.stop().animate( {scrollTop: $printer[0].scrollHeight - printerH  }, 600); // SET SCROLLER TO BOTTOM
 	}	
-
-
 
 
 	$('#message-input').focus();
@@ -55,7 +58,11 @@
 	function onMessage(msg) {
 		document.querySelector('#messages').appendChild(document.createElement('p')).textContent = msg;
 		scrollBottom();
-		// window.scrollTo(0,document.body.scrollHeight);
+		//if textbox not highlighted focus it
+		if($("#message-input").is(':focus')) {
+		} else{
+			titlenotifier.add();
+		}
 	}
 
 	socket.on('online now', online);
