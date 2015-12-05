@@ -1,7 +1,14 @@
-<h1>{{title}}</h1>
-<p id='ppl'>{{active}}</p>
 
-<ul id="messages"></ul>
+<div id='head'>
+	<h1>{{title}}</h1>
+	<p id='ppl'>{{active}}</p>
+</div>
+
+<div class='chat'>
+	<ul id="messages"></ul>
+</div>
+
+
 
 <div id='field'>
 	<input id="message-input" type=text autocomplete="off">
@@ -14,12 +21,27 @@
 	console.log(button);
 	button.addEventListener('click', sendMessage);
 
+	var $chat = $('.chat'),
+		$printer = $('#messages', $chat),
+		printerH  = $printer.innerHeight();
+
+	//// SCROLL BOTTOM	
+	function scrollBottom(){
+		$printer.stop().animate( {scrollTop: $printer[0].scrollHeight - printerH  }, 600); // SET SCROLLER TO BOTTOM
+	}	
+
+
+
+
+	$('#message-input').focus();
+
 
 	$("#message-input").keyup(function(event){
 	    if(event.keyCode == 13){
 	        $("#btn").click();
 	    }
 	});
+
 
 	function sendMessage(evt) {
 		if(document.querySelector('#message-input').value != ''){
@@ -32,7 +54,8 @@
 	socket.on('chat message', onMessage);
 	function onMessage(msg) {
 		document.querySelector('#messages').appendChild(document.createElement('p')).textContent = msg;
-		window.scrollTo(0,document.body.scrollHeight);
+		scrollBottom();
+		// window.scrollTo(0,document.body.scrollHeight);
 	}
 
 	socket.on('online now', online);
